@@ -1,0 +1,12 @@
+revoke execute on function public.has_role(uuid, public.app_role) from anon, public;
+revoke execute on function public.is_gestor() from anon, public;
+revoke execute on function public.can_operate() from anon, public;
+revoke execute on function public.can_finance() from anon, public;
+revoke execute on function public.handle_new_user() from anon, authenticated, public;
+revoke execute on function public.touch_updated_at() from anon, authenticated, public;
+revoke execute on function public.recalc_contrato_entrega() from anon, authenticated, public;
+revoke execute on function public.nf_item_estoque() from anon, authenticated, public;
+grant execute on function public.has_role(uuid, public.app_role) to authenticated;
+grant execute on function public.is_gestor() to authenticated;
+grant execute on function public.can_operate() to authenticated;
+grant execute on function public.can_finance() to authenticated;
