@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated/painel'
 import { Route as AuthenticatedRegistrosEntidadeRouteImport } from './routes/_authenticated/registros.$entidade'
 
 const IndexRoute = IndexRouteImport.update({
@@ -28,6 +29,11 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedPainelRoute = AuthenticatedPainelRouteImport.update({
+  id: '/painel',
+  path: '/painel',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedRegistrosEntidadeRoute =
   AuthenticatedRegistrosEntidadeRouteImport.update({
     id: '/registros/$entidade',
@@ -38,11 +44,13 @@ const AuthenticatedRegistrosEntidadeRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/painel': typeof AuthenticatedPainelRoute
   '/registros/$entidade': typeof AuthenticatedRegistrosEntidadeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/painel': typeof AuthenticatedPainelRoute
   '/registros/$entidade': typeof AuthenticatedRegistrosEntidadeRoute
 }
 export interface FileRoutesById {
@@ -50,18 +58,20 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/painel': typeof AuthenticatedPainelRoute
   '/_authenticated/registros/$entidade': typeof AuthenticatedRegistrosEntidadeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/registros/$entidade'
+  fullPaths: '/' | '/auth' | '/painel' | '/registros/$entidade'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/registros/$entidade'
+  to: '/' | '/auth' | '/painel' | '/registros/$entidade'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/painel'
     | '/_authenticated/registros/$entidade'
   fileRoutesById: FileRoutesById
 }
@@ -94,6 +104,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/painel': {
+      id: '/_authenticated/painel'
+      path: '/painel'
+      fullPath: '/painel'
+      preLoaderRoute: typeof AuthenticatedPainelRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/registros/$entidade': {
       id: '/_authenticated/registros/$entidade'
       path: '/registros/$entidade'
@@ -105,10 +122,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedPainelRoute: typeof AuthenticatedPainelRoute
   AuthenticatedRegistrosEntidadeRoute: typeof AuthenticatedRegistrosEntidadeRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedPainelRoute: AuthenticatedPainelRoute,
   AuthenticatedRegistrosEntidadeRoute: AuthenticatedRegistrosEntidadeRoute,
 }
 
