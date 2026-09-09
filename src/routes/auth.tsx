@@ -55,13 +55,17 @@ function AuthPage() {
         if (error) throw error;
         void navigate({ to: "/painel" });
       } else {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password: senha,
           options: { data: { nome }, emailRedirectTo: window.location.origin },
         });
         if (error) throw error;
-        toast.success("Conta criada. Você já pode entrar.");
+        if (data.session) {
+          void navigate({ to: "/painel" });
+          return;
+        }
+        toast.success("Conta criada. Confirme o e-mail que enviamos e depois entre.");
         setModo("entrar");
       }
     } catch (err) {
