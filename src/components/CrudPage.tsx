@@ -402,18 +402,16 @@ export function CrudPage({ entity }: { entity: EntityDef }) {
                     id={f.name}
                     className="h-12"
                     inputMode={f.type === "number" || f.type === "money" ? "decimal" : undefined}
-                    type={
-                      f.type === "date"
-                        ? "date"
-                        : f.type === "datetime"
-                          ? "datetime-local"
-                          : f.type === "number" || f.type === "money"
-                            ? "number"
-                            : "text"
-                    }
-                    step={f.type === "number" || f.type === "money" ? "any" : undefined}
+                    type={f.type === "date" ? "date" : f.type === "datetime" ? "datetime-local" : "text"}
+                    placeholder={f.type === "money" ? "0,00" : undefined}
                     value={String(valores[f.name] ?? "")}
-                    onChange={(e) => setValores({ ...valores, [f.name]: e.target.value })}
+                    onChange={(e) => {
+                      const v =
+                        f.type === "number" || f.type === "money"
+                          ? e.target.value.replace(/[^\d.,-]/g, "")
+                          : e.target.value;
+                      setValores({ ...valores, [f.name]: v });
+                    }}
                   />
                 )}
                 {f.help && <p className="text-xs text-muted-foreground">{f.help}</p>}
