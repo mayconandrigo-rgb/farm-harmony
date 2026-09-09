@@ -102,7 +102,8 @@ export function CrudPage({ entity }: { entity: EntityDef }) {
         const raw = payload[f.name];
         if (f.type === "boolean") limpo[f.name] = Boolean(raw);
         else if (raw === "" || raw === undefined || raw === null) limpo[f.name] = null;
-        else if (f.type === "number" || f.type === "money") limpo[f.name] = Number(raw);
+        else if (f.type === "number" || f.type === "money")
+          limpo[f.name] = Number(String(raw).replace(/\./g, "").replace(",", "."));
         else limpo[f.name] = raw;
       }
       if (editando) {
