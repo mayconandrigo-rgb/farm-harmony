@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedEstoqueRouteImport } from './routes/_authenticated/estoque'
+import { Route as AuthenticatedNotasFiscaisRouteImport } from './routes/_authenticated/notas-fiscais'
 import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated/painel'
 import { Route as AuthenticatedRelatoriosRouteImport } from './routes/_authenticated/relatorios'
 import { Route as AuthenticatedRegistrosEntidadeRouteImport } from './routes/_authenticated/registros.$entidade'
@@ -36,6 +37,12 @@ const AuthenticatedEstoqueRoute = AuthenticatedEstoqueRouteImport.update({
   path: '/estoque',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedNotasFiscaisRoute =
+  AuthenticatedNotasFiscaisRouteImport.update({
+    id: '/notas-fiscais',
+    path: '/notas-fiscais',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedPainelRoute = AuthenticatedPainelRouteImport.update({
   id: '/painel',
   path: '/painel',
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/estoque': typeof AuthenticatedEstoqueRoute
+  '/notas-fiscais': typeof AuthenticatedNotasFiscaisRoute
   '/painel': typeof AuthenticatedPainelRoute
   '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/registros/$entidade': typeof AuthenticatedRegistrosEntidadeRoute
@@ -65,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/estoque': typeof AuthenticatedEstoqueRoute
+  '/notas-fiscais': typeof AuthenticatedNotasFiscaisRoute
   '/painel': typeof AuthenticatedPainelRoute
   '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/registros/$entidade': typeof AuthenticatedRegistrosEntidadeRoute
@@ -75,6 +84,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/estoque': typeof AuthenticatedEstoqueRoute
+  '/_authenticated/notas-fiscais': typeof AuthenticatedNotasFiscaisRoute
   '/_authenticated/painel': typeof AuthenticatedPainelRoute
   '/_authenticated/relatorios': typeof AuthenticatedRelatoriosRoute
   '/_authenticated/registros/$entidade': typeof AuthenticatedRegistrosEntidadeRoute
@@ -85,6 +95,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/estoque'
+    | '/notas-fiscais'
     | '/painel'
     | '/relatorios'
     | '/registros/$entidade'
@@ -93,6 +104,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/estoque'
+    | '/notas-fiscais'
     | '/painel'
     | '/relatorios'
     | '/registros/$entidade'
@@ -102,6 +114,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/estoque'
+    | '/_authenticated/notas-fiscais'
     | '/_authenticated/painel'
     | '/_authenticated/relatorios'
     | '/_authenticated/registros/$entidade'
@@ -143,6 +156,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEstoqueRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/notas-fiscais': {
+      id: '/_authenticated/notas-fiscais'
+      path: '/notas-fiscais'
+      fullPath: '/notas-fiscais'
+      preLoaderRoute: typeof AuthenticatedNotasFiscaisRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/painel': {
       id: '/_authenticated/painel'
       path: '/painel'
@@ -169,6 +189,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedEstoqueRoute: typeof AuthenticatedEstoqueRoute
+  AuthenticatedNotasFiscaisRoute: typeof AuthenticatedNotasFiscaisRoute
   AuthenticatedPainelRoute: typeof AuthenticatedPainelRoute
   AuthenticatedRelatoriosRoute: typeof AuthenticatedRelatoriosRoute
   AuthenticatedRegistrosEntidadeRoute: typeof AuthenticatedRegistrosEntidadeRoute
@@ -176,6 +197,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedEstoqueRoute: AuthenticatedEstoqueRoute,
+  AuthenticatedNotasFiscaisRoute: AuthenticatedNotasFiscaisRoute,
   AuthenticatedPainelRoute: AuthenticatedPainelRoute,
   AuthenticatedRelatoriosRoute: AuthenticatedRelatoriosRoute,
   AuthenticatedRegistrosEntidadeRoute: AuthenticatedRegistrosEntidadeRoute,
