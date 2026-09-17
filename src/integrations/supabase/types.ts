@@ -335,9 +335,37 @@ export type Database = {
         }
         Relationships: []
       }
+      centros_custo: {
+        Row: {
+          atividade: string | null
+          ativo: boolean
+          created_at: string
+          id: string
+          nome: string
+          updated_at: string
+        }
+        Insert: {
+          atividade?: string | null
+          ativo?: boolean
+          created_at?: string
+          id?: string
+          nome: string
+          updated_at?: string
+        }
+        Update: {
+          atividade?: string | null
+          ativo?: boolean
+          created_at?: string
+          id?: string
+          nome?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       contas: {
         Row: {
           categoria: string | null
+          centro_custo_id: string | null
           created_at: string
           data_pagamento: string | null
           descricao: string
@@ -346,14 +374,18 @@ export type Database = {
           nota_fiscal_id: string | null
           observacoes: string | null
           parceiro_id: string | null
+          parcela: number | null
+          plano_conta_id: string | null
           status: string
           tipo: string
+          total_parcelas: number | null
           updated_at: string
           valor: number
           vencimento: string | null
         }
         Insert: {
           categoria?: string | null
+          centro_custo_id?: string | null
           created_at?: string
           data_pagamento?: string | null
           descricao: string
@@ -362,14 +394,18 @@ export type Database = {
           nota_fiscal_id?: string | null
           observacoes?: string | null
           parceiro_id?: string | null
+          parcela?: number | null
+          plano_conta_id?: string | null
           status?: string
           tipo?: string
+          total_parcelas?: number | null
           updated_at?: string
           valor?: number
           vencimento?: string | null
         }
         Update: {
           categoria?: string | null
+          centro_custo_id?: string | null
           created_at?: string
           data_pagamento?: string | null
           descricao?: string
@@ -378,13 +414,23 @@ export type Database = {
           nota_fiscal_id?: string | null
           observacoes?: string | null
           parceiro_id?: string | null
+          parcela?: number | null
+          plano_conta_id?: string | null
           status?: string
           tipo?: string
+          total_parcelas?: number | null
           updated_at?: string
           valor?: number
           vencimento?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "contas_centro_custo_id_fkey"
+            columns: ["centro_custo_id"]
+            isOneToOne: false
+            referencedRelation: "centros_custo"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "contas_nota_fiscal_id_fkey"
             columns: ["nota_fiscal_id"]
@@ -397,6 +443,13 @@ export type Database = {
             columns: ["parceiro_id"]
             isOneToOne: false
             referencedRelation: "parceiros"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contas_plano_conta_id_fkey"
+            columns: ["plano_conta_id"]
+            isOneToOne: false
+            referencedRelation: "plano_contas"
             referencedColumns: ["id"]
           },
         ]
@@ -547,8 +600,11 @@ export type Database = {
       estoque_movimentos: {
         Row: {
           area: string | null
+          centro_custo_id: string | null
           created_at: string
           created_by: string | null
+          custo_total: number | null
+          custo_unitario: number | null
           data: string
           id: string
           nota_fiscal_id: string | null
@@ -557,13 +613,17 @@ export type Database = {
           quantidade: number
           referencia: string | null
           responsavel: string | null
+          talhao_id: string | null
           tipo: string
           updated_at: string
         }
         Insert: {
           area?: string | null
+          centro_custo_id?: string | null
           created_at?: string
           created_by?: string | null
+          custo_total?: number | null
+          custo_unitario?: number | null
           data?: string
           id?: string
           nota_fiscal_id?: string | null
@@ -572,13 +632,17 @@ export type Database = {
           quantidade?: number
           referencia?: string | null
           responsavel?: string | null
+          talhao_id?: string | null
           tipo?: string
           updated_at?: string
         }
         Update: {
           area?: string | null
+          centro_custo_id?: string | null
           created_at?: string
           created_by?: string | null
+          custo_total?: number | null
+          custo_unitario?: number | null
           data?: string
           id?: string
           nota_fiscal_id?: string | null
@@ -587,10 +651,18 @@ export type Database = {
           quantidade?: number
           referencia?: string | null
           responsavel?: string | null
+          talhao_id?: string | null
           tipo?: string
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "estoque_movimentos_centro_custo_id_fkey"
+            columns: ["centro_custo_id"]
+            isOneToOne: false
+            referencedRelation: "centros_custo"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "estoque_movimentos_produto_id_fkey"
             columns: ["produto_id"]
@@ -603,6 +675,13 @@ export type Database = {
             columns: ["produto_id"]
             isOneToOne: false
             referencedRelation: "produtos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "estoque_movimentos_talhao_id_fkey"
+            columns: ["talhao_id"]
+            isOneToOne: false
+            referencedRelation: "talhoes"
             referencedColumns: ["id"]
           },
         ]
@@ -838,30 +917,42 @@ export type Database = {
       }
       nf_itens: {
         Row: {
+          cfop: string | null
           created_at: string
           descricao: string | null
           id: string
+          ncm: string | null
           nota_fiscal_id: string
           produto_id: string | null
           quantidade: number
+          unidade: string | null
+          valor_total: number | null
           valor_unitario: number | null
         }
         Insert: {
+          cfop?: string | null
           created_at?: string
           descricao?: string | null
           id?: string
+          ncm?: string | null
           nota_fiscal_id: string
           produto_id?: string | null
           quantidade?: number
+          unidade?: string | null
+          valor_total?: number | null
           valor_unitario?: number | null
         }
         Update: {
+          cfop?: string | null
           created_at?: string
           descricao?: string | null
           id?: string
+          ncm?: string | null
           nota_fiscal_id?: string
           produto_id?: string | null
           quantidade?: number
+          unidade?: string | null
+          valor_total?: number | null
           valor_unitario?: number | null
         }
         Relationships: [
@@ -890,42 +981,58 @@ export type Database = {
       }
       notas_fiscais: {
         Row: {
+          centro_custo_id: string | null
           created_at: string
           data_emissao: string
           frete: number | null
+          icms: number | null
           id: string
           numero: string | null
           observacoes: string | null
           parceiro_id: string | null
+          pis_cofins: number | null
           tipo: string
           updated_at: string
           valor_total: number | null
         }
         Insert: {
+          centro_custo_id?: string | null
           created_at?: string
           data_emissao?: string
           frete?: number | null
+          icms?: number | null
           id?: string
           numero?: string | null
           observacoes?: string | null
           parceiro_id?: string | null
+          pis_cofins?: number | null
           tipo?: string
           updated_at?: string
           valor_total?: number | null
         }
         Update: {
+          centro_custo_id?: string | null
           created_at?: string
           data_emissao?: string
           frete?: number | null
+          icms?: number | null
           id?: string
           numero?: string | null
           observacoes?: string | null
           parceiro_id?: string | null
+          pis_cofins?: number | null
           tipo?: string
           updated_at?: string
           valor_total?: number | null
         }
         Relationships: [
+          {
+            foreignKeyName: "notas_fiscais_centro_custo_id_fkey"
+            columns: ["centro_custo_id"]
+            isOneToOne: false
+            referencedRelation: "centros_custo"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "notas_fiscais_parceiro_id_fkey"
             columns: ["parceiro_id"]
@@ -1041,6 +1148,36 @@ export type Database = {
           id?: string
           nome?: string
           observacoes?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      plano_contas: {
+        Row: {
+          ativo: boolean
+          codigo: string | null
+          created_at: string
+          id: string
+          natureza: string
+          nome: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          codigo?: string | null
+          created_at?: string
+          id?: string
+          natureza?: string
+          nome: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          codigo?: string | null
+          created_at?: string
+          id?: string
+          natureza?: string
+          nome?: string
           updated_at?: string
         }
         Relationships: []
@@ -1178,6 +1315,7 @@ export type Database = {
         Row: {
           categoria: string
           created_at: string
+          custo_medio: number
           estoque_minimo: number | null
           id: string
           nome: string
@@ -1188,6 +1326,7 @@ export type Database = {
         Insert: {
           categoria?: string
           created_at?: string
+          custo_medio?: number
           estoque_minimo?: number | null
           id?: string
           nome: string
@@ -1198,6 +1337,7 @@ export type Database = {
         Update: {
           categoria?: string
           created_at?: string
+          custo_medio?: number
           estoque_minimo?: number | null
           id?: string
           nome?: string
@@ -1534,6 +1674,7 @@ export type Database = {
         Returns: boolean
       }
       is_gestor: { Args: never; Returns: boolean }
+      saldo_produto: { Args: { _produto_id: string }; Returns: number }
     }
     Enums: {
       app_role: "gestor" | "financeiro" | "operador" | "consulta"
