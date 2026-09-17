@@ -1,0 +1,15 @@
+revoke all on function public.saldo_produto(uuid) from public;
+revoke all on function public.estoque_custo() from public;
+revoke all on function public.nf_bloqueia_exclusao() from public;
+revoke all on function public.nf_item_estoque() from public;
+revoke all on function public.touch_updated_at() from public;
+revoke all on function public.recalc_contrato_entrega() from public;
+revoke all on function public.handle_new_user() from public;
+revoke all on function public.has_role(uuid, public.app_role) from public;
+revoke all on function public.is_gestor() from public;
+revoke all on function public.can_operate() from public;
+revoke all on function public.can_finance() from public;
+grant execute on function public.has_role(uuid, public.app_role) to authenticated;
+grant execute on function public.is_gestor() to authenticated;
+grant execute on function public.can_operate() to authenticated;
+grant execute on function public.can_finance() to authenticated;
