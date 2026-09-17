@@ -919,6 +919,7 @@ export type Database = {
         Row: {
           cfop: string | null
           created_at: string
+          custo_unitario: number | null
           descricao: string | null
           id: string
           ncm: string | null
@@ -932,6 +933,7 @@ export type Database = {
         Insert: {
           cfop?: string | null
           created_at?: string
+          custo_unitario?: number | null
           descricao?: string | null
           id?: string
           ncm?: string | null
@@ -945,6 +947,7 @@ export type Database = {
         Update: {
           cfop?: string | null
           created_at?: string
+          custo_unitario?: number | null
           descricao?: string | null
           id?: string
           ncm?: string | null
