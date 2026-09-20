@@ -713,31 +713,8 @@ export const ENTITIES: EntityDef[] = [
   },
 
   // ============ FINANCEIRO ============
-  {
-    key: "notas_fiscais",
-    table: "notas_fiscais",
-    label: "Notas fiscais",
-    singular: "Nota fiscal",
-    modulo: "financeiro",
-    descricao: "Entradas e saídas; os itens lançam estoque automaticamente",
-    financeiro: true,
-    fields: [
-      { name: "numero", label: "Número", type: "text", required: true },
-      { name: "tipo", label: "Tipo", type: "select", required: true, options: ["entrada", "saida"] },
-      {
-        name: "parceiro_id",
-        label: "Fornecedor / cliente",
-        type: "ref",
-        ref: { table: "parceiros", label: "nome" },
-      },
-      { name: "data_emissao", label: "Data de emissão", type: "date", required: true },
-      { name: "valor_total", label: "Valor total", type: "money", required: true },
-      { name: "frete", label: "Frete", type: "money" },
-      obs,
-    ],
-    list: ["numero", "tipo", "parceiro_id", "data_emissao", "valor_total", "frete"],
-    order: { column: "data_emissao" },
-  },
+  // Notas fiscais têm tela própria (master-detail) em /notas-fiscais.
+
   {
     key: "contas",
     table: "contas",
