@@ -52,6 +52,23 @@ export function AppShell({ children }: { children: ReactNode }) {
           }`}
         >
           <BarChart3 className="size-4" /> Relatórios
+        </Link>        <Link
+          to="/talhoes"
+          onClick={() => setMenuAberto(false)}
+          className={`flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium ${
+            pathname === "/talhoes" ? "bg-sidebar-accent text-sidebar-accent-foreground" : "hover:bg-sidebar-accent/60"
+          }`}
+        >
+          <Sprout className="size-4" /> Talhões
+        </Link>
+        <Link
+          to="/safras"
+          onClick={() => setMenuAberto(false)}
+          className={`flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium ${
+            pathname === "/safras" ? "bg-sidebar-accent text-sidebar-accent-foreground" : "hover:bg-sidebar-accent/60"
+          }`}
+        >
+          <Sprout className="size-4" /> Safras
         </Link>
       </div>
 
