@@ -52,7 +52,8 @@ export function AppShell({ children }: { children: ReactNode }) {
           }`}
         >
           <BarChart3 className="size-4" /> Relatórios
-        </Link>        <Link
+        </Link>        
+        <Link
           to="/talhoes"
           onClick={() => setMenuAberto(false)}
           className={`flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium ${
